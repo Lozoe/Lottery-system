@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>抽奖系统</title>
+    <style>
+    *,
+    body {
+        margin: 0px;
+        padding: 0px;
+    }
+    
+    h1 {
+        text-align: center;
+        margin: 40px auto;
+        color: red;
+    }
+    
+    .btns {
+        text-align: center;
+    }
+    
+    .btns #play,
+    .btns #stop {
+        margin: 20px;
+        height: 40px;
+        width: 100px;
+        font-size: 24px;
+        background-color: #2C33D3;
+        cursor: pointer;
+        outline: none;
+        color: white;
+    }
+    </style>
+</head>
+
+<body>
+    <h1 id="title">开始抽奖啦！</h1>
+    <div class="btns">
+        <button id="play">开 始</button>
+        <button id="stop">停 止</button>
+    </div>
+    <script type="text/javascript">
+    var data = ['iPhone6', 'iPad', '惠普打印机', '三星手机', '谢谢参与', '佳能相机', '50元手机充值卡', '100元代金券'];
+    var timer = null;
+    var flag = 0;
+    var play = document.getElementById('play');
+    var stop = document.getElementById('stop');
+    var title = document.getElementById('title');
+    window.onload = function() {
+        /*鼠标事件*/
+        //点击开始，开始抽奖
+        play.onclick = playFun;
+        //点击停止，抽奖结束
+        stop.onclick = stopFun;
+        /*键盘事件*/
+        document.onkeyup = function(event) {
+            event = event || window.event;
+            keyBoard(event);
+        };
+    };
+
+    function playFun() {
+        play.style.background = '#999';
+        clearInterval(timer);
+        timer = setInterval(function() {
+            var random = Math.floor(Math.random() * data.length);
+            title.innerHTML = data[random];
+        }, 50);
+    }
+
+    function stopFun() {
+        clearInterval(timer);
+        play.style.background = '#2C33D3';
+    }
+
+    function keyBoard(event) {
+        event = event || window.event;
+        if (event.keyCode == 13) {
+            if (flag === 0) {
+                playFun();
+                flag = 1;
+            } else {
+                stopFun();
+                flag = 0;
+            }
+        }
+    }
+    </script>
+</body>
+
+</html>
